@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: ga4_raw
+    schema: raw_ga4
+    tables:
+      - name: events

@@ -1,0 +1,20 @@
+ipykernel
+pandas
+numpy
+seaborn
+scikit-learn
+imblearn
+matplotlib
+notebook
+faker
+sdv
+python-dateutil
+tqdm
+pytz
+pyodbc
+sqlalchemy
+datasets
+pyarrow
+dask[complete]
+
+astro-run-dag # This package is needed for the astro run command. It will be removed before a deploy

@@ -1,0 +1,19 @@
+name: 'etl_models'
+version: '1.0.0'
+
+profile: 'etl_models'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  etl_models:
+    +materialized: view  # default materialization for all models
