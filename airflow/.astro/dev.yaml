@@ -1,0 +1,5 @@
+volumes:
+  - ./secrets:/usr/local/airflow/secrets
+env:
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: /usr/local/airflow/secrets/gcs_key.json

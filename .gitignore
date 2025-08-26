@@ -1,3 +1,5 @@
 *.csv
 airflow/dags/exampledag.py
 /scripts/data_collection
+/airflow/secrets
+dbt/etl_models/models/meta/meta_campaigns.sql
