@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: ga4_raw
+    schema: etl_staging
+    tables:
+      - name: external_ga4_csv
+        description: "External GA4 CSV table loaded from GCS"
+        columns:
+          - name: event_ts
+            description: "Timestamp of the event"
+            data_type: STRING
+          - name: user_pseudo_id
+            description: "Anonymous user identifier"
+            data_type: STRING
+          - name: value_usd
+            description: "Transaction value in USD"
+            data_type: FLOAT
+          - name: transaction_id
+            description: "Transaction ID"
+            data_type: STRING
+          - name: source
+            description: "Traffic source"
+            data_type: STRING
+          - name: medium
+            description: "Traffic medium"
+            data_type: STRING
+          - name: campaign_name
+            description: "Campaign name"
+            data_type: STRING
