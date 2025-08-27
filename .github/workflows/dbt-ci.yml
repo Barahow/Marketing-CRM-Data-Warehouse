@@ -10,7 +10,7 @@ jobs:
   dbt-build-and-test:
     runs-on: ubuntu-latest
     container:
-      image: airflow_68dd04/airflow:latest
+      image: barahow/airflow:latest
       options: --user root
       volumes:
         - ${{ github.workspace }}/dbt/etl_models:/usr/local/airflow/dbt/etl_models
