@@ -19,20 +19,17 @@ jobs:
       DBT_PROFILES_DIR: /usr/local/airflow/secrets
       GOOGLE_APPLICATION_CREDENTIALS: /usr/local/airflow/secrets/ga4_meta_crm.json
 
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Ensures dbt and SQLFluff are available
+      - name: Verify dbt files
+        run: ls -la /usr/local/airflow/dbt/etl_models
+
+      - name: Install dbt and SQLFluff
         run: |
-          if ! command -v dbt >/dev/null 2>&1; then
-            python -m pip install --upgrade pip
-            pip install dbt-bigquery
-          fi
-          if ! python -m sqlfluff --version >/dev/null 2>&1; then
-            pip install sqlfluff sqlfluff-templater-dbt
-          fi
+          python -m pip install --upgrade pip
+          pip install dbt-bigquery sqlfluff sqlfluff-templater-dbt
 
       - name: Install dbt dependencies
         run: dbt deps --project-dir /usr/local/airflow/dbt/etl_models
