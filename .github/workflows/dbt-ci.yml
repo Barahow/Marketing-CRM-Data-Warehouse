@@ -12,19 +12,19 @@ jobs:
     container:
       image: barahow/airflow:latest
       options: --user root
-      volumes:
-        - ${{ github.workspace }}/dbt/etl_models:/usr/local/airflow/dbt/etl_models:cached
-        - ${{ github.workspace }}/airflow/secrets:/usr/local/airflow/secrets:cached
     env:
-      DBT_PROFILES_DIR: /usr/local/airflow/secrets
-      GOOGLE_APPLICATION_CREDENTIALS: /usr/local/airflow/secrets/ga4_meta_crm.json
+      DBT_PROFILES_DIR: dbt/etl_models/dbt_env
+      GOOGLE_APPLICATION_CREDENTIALS: airflow/secrets/ga4_meta_crm.json
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Verify dbt files
-        run: ls -la /usr/local/airflow/dbt/etl_models
+        run: |
+          echo "Listing files in dbt/etl_models"
+          ls -la dbt/etl_models
+          test -f dbt/etl_models/dbt_project.yml
 
       - name: Install dbt and SQLFluff
         run: |
@@ -32,13 +32,13 @@ jobs:
           pip install dbt-bigquery sqlfluff sqlfluff-templater-dbt
 
       - name: Install dbt dependencies
-        run: dbt deps --project-dir /usr/local/airflow/dbt/etl_models
+        run: dbt deps --project-dir dbt/etl_models
 
       - name: Lint SQL with SQLFluff
-        run: python -m sqlfluff lint /usr/local/airflow/dbt/etl_models/models/
+        run: python -m sqlfluff lint dbt/etl_models/models/
 
       - name: Run dbt build
-        run: dbt build --project-dir /usr/local/airflow/dbt/etl_models --fail-fast --select state:modified+
+        run: dbt build --project-dir dbt/etl_models --fail-fast --select state:modified+
 
       - name: Run dbt tests
-        run: dbt test --project-dir /usr/local/airflow/dbt/etl_models --select tag:critical
+        run: dbt test --project-dir dbt/etl_models --select tag:critical
