@@ -1,11 +1,11 @@
 {{ config(materialized='table') }}
 
 select
-  CAST(event_ts AS DATETIME) as event_ts,
-  user_pseudo_id,
-  CAST(value_usd AS FLOAT64) as value_usd,
-  transaction_id,
-  source,
-  medium,
-  campaign_name
+    user_pseudo_id,
+    transaction_id,
+    source,
+    medium,
+    campaign_name,
+    CAST(event_ts as DATETIME) as event_ts,
+    CAST(value_usd as FLOAT64) as value_usd
 from {{ ref('staging_ga4') }}
