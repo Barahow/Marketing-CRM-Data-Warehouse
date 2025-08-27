@@ -1,0 +1,39 @@
+version: 2
+
+sources:
+  - name: crm_raw
+    schema: crm_analytics          # BigQuery dataset containing raw staging table
+    tables:
+      - name: staging_crm_orders    # staging table for CRM orders
+        description: "Cleaned CRM orders loaded from CSV"
+        columns:
+          - name: order_id
+            description: "Unique order identifier"
+          - name: contact_id
+            description: "CRM contact ID"
+          - name: user_pseudo_id
+            description: "GA4 user pseudo ID"
+          - name: order_ts
+            description: "Order timestamp"
+          - name: order_date
+            description: "Order date"
+          - name: amount
+            description: "Order amount"
+          - name: currency
+            description: "Currency of the order"
+          - name: items
+            description: "Number of items in order"
+          - name: campaign_id
+            description: "Associated campaign ID"
+          - name: channel
+            description: "Marketing channel"
+          - name: utm_source
+            description: "UTM source"
+          - name: utm_medium
+            description: "UTM medium"
+          - name: transaction_id
+            description: "Transaction ID"
+          - name: is_repeat
+            description: "Whether the order is repeat"
+          - name: payment_method
+            description: "Payment method used"

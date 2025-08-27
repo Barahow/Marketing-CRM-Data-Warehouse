@@ -3,7 +3,7 @@
 select
     PARSE_DATETIME('%Y-%m-%d %H:%M:%S', event_ts) as event_ts,
     user_pseudo_id,
-    value_usd,
+    CAST(value_usd AS FLOAT64) as value_usd,
     transaction_id,
     source,
     medium,

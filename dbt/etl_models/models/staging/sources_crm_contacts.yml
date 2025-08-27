@@ -1,0 +1,22 @@
+version: 2
+
+sources:
+  - name: crm_raw
+    schema: crm_analytics          # BigQuery dataset containing raw staging table
+    tables:
+      - name: staging_crm_contacts    # staging table for CRM contacts
+        description: "Cleaned CRM contacts loaded from CSV"
+        columns:
+          - name: contact_id
+            description: "Unique CRM contact ID"
+          - name: email
+            description: "Contact email address"
+          - name: created_at
+            description: "Timestamp when contact was created"
+          - name: country
+            description: "Contact country"
+          - name: phone
+            description: "Contact phone number"
+          - name: email_opt_in
+            description: "Whether contact opted in to emails"
+
