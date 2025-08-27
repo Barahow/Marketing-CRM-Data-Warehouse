@@ -13,11 +13,12 @@ jobs:
       image: barahow/airflow:latest
       options: --user root
       volumes:
-        - ${{ github.workspace }}/dbt/etl_models:/usr/local/airflow/dbt/etl_models
-        - ${{ github.workspace }}/airflow/secrets:/usr/local/airflow/secrets
+        - ${{ github.workspace }}/dbt/etl_models:/usr/local/airflow/dbt/etl_models:cached
+        - ${{ github.workspace }}/airflow/secrets:/usr/local/airflow/secrets:cached
     env:
       DBT_PROFILES_DIR: /usr/local/airflow/secrets
       GOOGLE_APPLICATION_CREDENTIALS: /usr/local/airflow/secrets/ga4_meta_crm.json
+
 
     steps:
       - name: Checkout repo
