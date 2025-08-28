@@ -1,11 +1,7 @@
 # Marketing & CRM Data Warehouse: End-to-End ETL and Analytics
-This repository is a complete showcase of an end-to-end modern data warehouse and analytics pipeline. The project ingests raw data from CSV files, Meta Ads API, and GA4 API, processes and models it through a medallion (Bronze, Silver, Gold) architecture in Google BigQuery, and visualizes it in Power BI.
 
-The solution is orchestrated with Astronomer Airflow running in Docker, uses Google Cloud Storage (GCS) as the landing zone, BigQuery as the data warehouse, dbt for transformations, and Power BI for business dashboards.
+Repository implements an end-to-end data warehouse and analytics pipeline. It ingests raw CRM CSVs, Meta Ads API data, and GA4 API data, ingests raw extracts to a Bronze layer on Google Cloud Storage, standardizes and deduplicates in a Silver layer in BigQuery via dbt, and produces analytics-ready Gold tables consumed by Power BI.
 
-
-
-## Table of Contents
 
 1. [Project Summary](#project-summary)
 2. [Architecture Overview](#architecture-overview)
@@ -16,52 +12,59 @@ The solution is orchestrated with Astronomer Airflow running in Docker, uses Goo
 7. [Project Overview](#project-overview)
 8. [Technical Requirements](#immediate-priorities)
 9. [Data Cautions and Limitations](#data-cautions-and-limitations)
+---
+
+## Project summary
+
+Purpose: deliver observable, auditable, production-grade dataflows that provide revenue, campaign, and customer analytics.
+
+Inputs: CRM CSVs, Meta Ads API, GA4 API.
+
+Outputs: Gold star-schema tables and Power BI reports: Executive Overview, Acquisition and Ads, Customer Revenue Analysis.
+
+Orchestration: Astronomer Airflow run in Docker. Transformation: dbt with BigQuery adapter. Storage: GCS for Bronze; BigQuery for Silver and Gold.
 
 ---
 
-## Project Summary
-End-to-end data warehouse and analytics implementation. Ingests CRM CSVs, Meta Ads API, and GA4 API. Raw extracts land in a Bronze layer on Google Cloud Storage, are cleaned and normalized in a Silver layer in BigQuery via dbt, and are modeled into analytics-ready Gold tables consumed by Power BI. Orchestration is managed by Astronomer Airflow running in Docker. Power BI contains three report tabs: Executive Overview, Acquisition & Ads, Customer Revenue Analysis. 
-
----
-
-## Architecture Overview
-
+## Architecture overview
 
 ![Architecture Overview](docs/screenshots/Data%20Architecture.png)
 
-
-
 ---
 
-## Integration Model 
+## Integration model
 
-
-
-![Integration Model ](docs/screenshots/Integration%20Model.png)
-
-
-
+![Integration Model](docs/screenshots/Integration%20Model.png)
 
 ---
 
 ## Dataflow
 
-![Data Flow ](docs/screenshots/DWH_Dataflow.png)
+![Data Flow](docs/screenshots/DWH_Dataflow.png)
 
 ---
 
-## Data Mart
-![Data Flow ](docs/screenshots/data_marts.png)
+## Data mart
+
+Core objects
+
+* fact\_orders
+* dim\_contacts
+* dim\_campaign
+* dim\_meta\_ads
+* dim\_ga4\_events
+
+![Data Mart](docs/screenshots/data_marts.png)
 
 ---
 
-## Power BI 
+## Power BI
 
-Tabs
+Report tabs
 
-1. Revenue and Product Performance - primary business translation
-2. Customer Insights and Segmentation
-3. Support and Customer Satisfaction
+* Executive Overview
+* Acquisition and Ads
+* Customer Revenue Analysis
 
 1. Executive Overview
 
@@ -75,64 +78,43 @@ Tabs
 
 ![Customer Revenue Analysis](docs/screenshots/customer_revenue_analysis_tab3.png)
 
+---
+
+## Project overview
+
+Bronze
+
+* Immutable raw extracts stored in GCS.
+
+Silver
+
+* dbt staging models that standardize timestamps and currency, deduplicate, and compute atomic metrics such as CTR, CPC, conversions.
+
+Gold
+
+* Business marts and star-schema tables for reporting. Incremental, auditable builds. DBT tests enforce uniqueness, not null, and referential integrity.
+
+Design rules: use UTC timestamps, canonical column names, surrogate keys where required.
 
 ---
 
-## Project Overview
-Purpose: provide reliable, observable, production-grade dataflows that deliver revenue, customer, and campaign analytics.
+## Technical requirements
 
-Core outputs and flows
+Minimal environment
 
-* Bronze: raw CSV/API dumps retained in GCS.
+* GCP project with BigQuery and GCS
+* Service account JSON with BigQuery and GCS permissions; set GOOGLE\_APPLICATION\_CREDENTIALS to that key
+* Docker Compose or Astronomer CLI to run Airflow locally
+* Python 3.8+ for Airflow tasks and extractors
+* dbt with BigQuery adapter and configured profiles.yml
+* Power BI Desktop for report development
 
-* Silver: dbt staging models that standardize dates/currency, deduplicate, and compute atomic metrics (CTR, CPC, conversions).
+Quick start
 
-* Gold: business marts and star-schema tables for reporting:
-
-- fact_orders
-
-- dim_contacts
-
-- dim_campaign
-
-- dim_meta_ads
-
-- dim_ga4_events
-
-- Power BI reports built on Gold tables with tabs:
-
-* Orchestration and execution: DAGs run ingestion, Bronze→Silver loads, and dbt runs to populate Gold.
-
-Design rules enforced
-
-UTC timestamps, canonical column names, surrogate keys where needed.
-
-dbt tests for uniqueness, not-null, and referential integrity.
-
-Bronze is immutable; Silver and Gold are built incrementally and auditable
-
----
-
-## Technical Requirements
-
-GCP project with BigQuery and GCS access.
-
-Service account JSON key with BigQuery and GCS permissions. Set GOOGLE_APPLICATION_CREDENTIALS to that key.
-
-Astronomer (Astro CLI) or Docker Compose to run Airflow locally. Astronomer recommended.
-
-Python 3.8+ for Airflow tasks and API extractors.
-
-dbt with the BigQuery adapter and configured profiles.yml.
-
-Power BI Desktop for report development and export.
-
-Optional: CLI tools for JSON inspection (jq), PDF tooling for high-DPI export of images.
-
-
-```
+```bash
 export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"
-astro dev start        # start Astronomer Airflow locally
+# start Astronomer Airflow locally (or use docker-compose)
+astro dev start
 # trigger DAGs in Airflow UI: ingest_crm, ingest_meta_ads, ingest_ga4
 cd dbt
 dbt deps
@@ -140,20 +122,22 @@ dbt run --profiles-dir . --target prod
 dbt test --profiles-dir . --target prod
 ```
 
+Optional tooling: jq for JSON inspection, High-DPI PDF tools for image export.
+
 ---
 
-## Data Cautions and Limitations
+## Data cautions and limitations
 
-* Used sampled GA4 and Meta Ads inputs that were expanded for pipeline and visualization testing. Consequences and required controls:
+* This project used sampled GA4 and Meta Ads data expanded for pipeline testing. Current KPI values are demonstration outputs only.
+* Ad-spend, impressions, and conversions may not scale or reflect real-world economics; ROAS and CAC derived from these values can be misleading.
+* GA4 sample expansion can break one-to-one attribution; validate transaction\_id linkage in Silver before using campaign-level attribution.
+* Before production reporting: replace synthetic sources with production feeds, rescale and validate dim\_meta\_ads.spend, run dbt tests on campaign+date joins, and reconcile audit views for order counts and missing FKs.
 
-* Ad-spend, impressions, and conversions may not scale or align with real-world economics; ROAS and CAC derived from these values can be misleading.
-
-* High AOV, extreme ROAS, or anomalous CAC values likely reflect synthetic expansion and/or unscaled spend rather than true performance.
-
-* GA4 sample expansion can break one-to-one attribution assumptions; always validate transaction_id linkage in Silver before using campaign-level attribution.
-
-* Required action before production reporting: rescale and validate dim_meta_ads.spend in Silver, run dbt tests on campaign+date joins, and reconcile audit views (order counts, missing FKs).
-* Treat current KPI values as demonstration outputs only until source spend, impressions, and transaction linkages are validated and replaced with production feeds.
 ---
+
+
+## Notes
+
+This repository is a demonstration. Validate all source linkages and spend values before using reports for decision-making.
 
 
