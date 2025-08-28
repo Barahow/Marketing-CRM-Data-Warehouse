@@ -112,7 +112,7 @@ Minimal environment
 Quick start
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS="/path/to/service-account.json"
+export GOOGLE_APPLICATION_CREDENTIALS="yourpath"
 # start Astronomer Airflow locally (or use docker-compose)
 astro dev start
 # trigger DAGs in Airflow UI: ingest_crm, ingest_meta_ads, ingest_ga4
