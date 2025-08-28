@@ -1,8 +1,4 @@
-# end-to-end-etl-marketing-crm
-
-
-Data Warehouse and Analytics Project
-
+# Marketing & CRM Data Warehouse: End-to-End ETL and Analytics
 This repository is a complete showcase of an end-to-end modern data warehouse and analytics pipeline. The project ingests raw data from CSV files, Meta Ads API, and GA4 API, processes and models it through a medallion (Bronze, Silver, Gold) architecture in Google BigQuery, and visualizes it in Power BI.
 
 The solution is orchestrated with Astronomer Airflow running in Docker, uses Google Cloud Storage (GCS) as the landing zone, BigQuery as the data warehouse, dbt for transformations, and Power BI for business dashboards.
