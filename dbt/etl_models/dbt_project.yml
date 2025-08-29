@@ -16,4 +16,16 @@ clean-targets:
 
 models:
   etl_models:
-    +materialized: view  # default materialization for all models
+    marts:
+      crm_contacts:
+        +materialized: view
+      crm_orders:
+        +materialized: view
+      ga4:
+        +materialized: view
+      meta:
+        +materialized: view
+    staging:
+      +materialized: view
+
+

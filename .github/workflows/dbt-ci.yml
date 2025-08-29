@@ -13,12 +13,18 @@ jobs:
       image: barahow/airflow:latest
       options: --user root
     env:
-      DBT_PROFILES_DIR: dbt/etl_models/dbt_env
-      GOOGLE_APPLICATION_CREDENTIALS: airflow/secrets/ga4_meta_crm.json
+      DBT_PROFILES_DIR: ./dbt/etl_models/dbt_env
+      GOOGLE_APPLICATION_CREDENTIALS: ./airflow/secrets/ga4_meta_crm.json
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+
+      - name: Set up service account
+        run: |
+          mkdir -p airflow/secrets
+          echo "${{ secrets.GA4_META_CRM_JSON }}" > airflow/secrets/ga4_meta_crm.json
+        shell: bash
 
       - name: Verify dbt files
         run: |
@@ -37,8 +43,11 @@ jobs:
       - name: Lint SQL with SQLFluff
         run: python -m sqlfluff lint dbt/etl_models/models/ --dialect bigquery
 
+      - name: Compile dbt project
+        run: dbt compile --project-dir dbt/etl_models --profiles-dir ./dbt/etl_models/dbt_env
+
       - name: Run dbt build
-        run: dbt build --project-dir dbt/etl_models --fail-fast --select state:modified+
+        run: dbt build --project-dir dbt/etl_models --profiles-dir ./dbt/etl_models/dbt_env --fail-fast --select state:modified+
 
       - name: Run dbt tests
-        run: dbt test --project-dir dbt/etl_models --select tag:critical
+        run: dbt test --project-dir dbt/etl_models --profiles-dir ./dbt/etl_models/dbt_env --select tag:critical

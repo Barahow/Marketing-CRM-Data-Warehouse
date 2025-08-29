@@ -1,0 +1,21 @@
+
+=== RelationCache Final State ===
+Total Schemas: 1
+
+[PARTIAL]  SCHEMA
+   ╭─ Name: `ga4-meta-crm-integration`.`crm_analytics`
+   ├─ Relations: 6 (individually cached)
+   ├─ Individual Relations:
+   │  ├ • `ga4-meta-crm-integration`.`crm_analytics`.`crm_contacts_transactions` → 1756465129800ms
+   │  ├ • `ga4-meta-crm-integration`.`crm_analytics`.`crm_orders_transactions` → 1756465119590ms
+   │  ├ • `ga4-meta-crm-integration`.`crm_analytics`.`staging_crm_contacts` → 1756465124853ms
+   │  ├ • `ga4-meta-crm-integration`.`crm_analytics`.`staging_crm_orders` → 1756465114237ms
+   │  ├ • `ga4-meta-crm-integration`.`crm_analytics`.`staging_ga4` → 1756465108323ms
+   │  ╰ • `ga4-meta-crm-integration`.`crm_analytics`.`staging_meta_ads` → 1756465106264ms
+   ╰─ Status: Relations cached individually
+
+=== Summary ===
+Complete Schemas: 0
+Partial Schemas: 1
+Total Relations: 6
+
