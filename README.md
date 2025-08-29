@@ -35,19 +35,19 @@ Gold Layer: Houses business-ready data modeled into a star schema required for r
 ---
 
 ## Integration model
-This image illustrates how different source systems (Api, CRM) are integrated into the warehouse:
-![Integration Model](docs/screenshots/Integration%20Model.png)
+
+![This image illustrates how different source systems (Api, CRM) are integrated into the warehouse:](docs/screenshots/Integration%20Model.png)
 
 ---
 
 ## Dataflow
-The following diagram visualizes the flow of data from raw ingestion to analytics-ready tables:
-![Data Flow](docs/screenshots/DWH_Dataflow.png)
+
+![The following diagram visualizes the flow of data from raw ingestion to analytics-ready tables:](docs/screenshots/DWH_Dataflow.png)
 
 ---
 
 ## Data mart
-This image represents the final business-facing data mart, designed for reporting and analytics:
+
 Core objects
 
 * fact\_orders
@@ -56,7 +56,7 @@ Core objects
 * dim\_meta\_ads
 * dim\_ga4\_events
 
-![Data Mart](docs/screenshots/data_marts.png)
+![This image represents the final business-facing data mart, designed for reporting and analytics:](docs/screenshots/data_marts.png)
 
 ---
 
