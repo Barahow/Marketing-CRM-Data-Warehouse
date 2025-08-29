@@ -29,23 +29,25 @@ Orchestration: Astronomer Airflow run in Docker. Transformation: dbt with BigQue
 ## Architecture overview
 
 ![Architecture Overview](docs/screenshots/Data%20Architecture.png)
-
+Bronze Layer: Stores raw data as-is from the source systems. Data is ingested from CSV files into GCS using Airflow DAG.
+Silver Layer: This layer includes data cleansing, standardization, and normalization processes to prepare data for analysis.
+Gold Layer: Houses business-ready data modeled into a star schema required for reporting and analytics.
 ---
 
 ## Integration model
-
+This image illustrates how different source systems (Api, CRM) are integrated into the warehouse:
 ![Integration Model](docs/screenshots/Integration%20Model.png)
 
 ---
 
 ## Dataflow
-
+The following diagram visualizes the flow of data from raw ingestion to analytics-ready tables:
 ![Data Flow](docs/screenshots/DWH_Dataflow.png)
 
 ---
 
 ## Data mart
-
+This image represents the final business-facing data mart, designed for reporting and analytics:
 Core objects
 
 * fact\_orders
