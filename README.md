@@ -169,12 +169,7 @@ How to reproduce alerts and troubleshoot
 2. Click through to failing DAG run; open failed task and view logs and stacktrace.
 3. Re-run failed task or DAG from UI after fixing root cause.
 
-Notes on production hardening (describe, do not require for this repo)
 
-* Add task-level alerting with more granular messages and automatic inclusion of log links.
-* Integrate Airflow metrics with Prometheus and Grafana or export logs to a central logging system for dashboards and long-term retention.
-* Add escalation: Slack or PagerDuty for critical failures, with retry and deduplication logic.
-* Define SLAs for key DAGs and configure Airflow to notify on SLA misses.
 
 ---
 
