@@ -1,6 +1,4 @@
-version: 2
-
 sources:
-  - name: meta_raw
+  - name: meta_raw_marts
     tables:
       - name: external_meta_ads_csv
