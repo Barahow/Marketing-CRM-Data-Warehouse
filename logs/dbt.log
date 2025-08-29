@@ -1,31 +1,6 @@
 dbt-fusion 2.0.0-preview.3
-warning: dbt1701: --fail-fast is not supported yet
    Loading dbt_env\profiles.yml
 warning: dbt0102: Duplicate definition for table 'staging_crm_contacts' in source 'crm_raw' found in file 'models\staging\sources_crm_contacts.yml'. Using definition from 'models\marts\crm_contacts\sources.yml'.
 warning: dbt0102: Duplicate definition for table 'staging_crm_orders' in source 'crm_raw' found in file 'models\staging\sources_crm_orders.yml'. Using definition from 'models\marts\crm_orders\sources.yml'.
-warning: dbt0102: Duplicate definition for table 'external_meta_ads_csv' in source 'meta_raw' found in file 'models\staging\sources_meta.yml'. Using definition from 'models\marts\meta\sources.yml'.
-    Failed [  2.02s] model crm_analytics.staging_meta_ads (view)
-error: dbt1501: Error executing materialization macro 'dbt_bigquery.materialization_view_bigquery' for model model.etl_models.staging_meta_ads: Failed to eval the compiled Jinja expression invalid operation: Compilation Error: Trying to create view `ga4-meta-crm-integration`.`crm_analytics`.`staging_meta_ads`, but it currently exists as a table. Either drop `ga4-meta-crm-integration`.`crm_analytics`.`staging_meta_ads` manually, or run dbt with `--full-refresh` and dbt will drop it for you.
-(in compiled\models\staging\staging_meta_ads.sql:1:13)
-(in dbt_internal_packages\dbt-bigquery\macros\materializations\view.sql:15:24)
-(in dbt_internal_packages\dbt-bigquery\macros\relations\view\replace.sql:29:5)
-(in dbt_internal_packages\dbt-bigquery\macros\relations\view\replace.sql:48:5)
-(in dbt_internal_packages\dbt-bigquery\macros\materializations\view.sql:6:7)
-  --> compiled\models\staging\staging_meta_ads.sql:1:13
-   Skipped [-------] model crm_analytics.meta_ads_transactions (table)
-   Skipped [-------] model crm_analytics.meta_campaigns (table)
-    Failed [  1.69s] model crm_analytics.staging_ga4 (view)
-error: dbt1501: Error executing materialization macro 'dbt_bigquery.materialization_view_bigquery' for model model.etl_models.staging_ga4: Failed to eval the compiled Jinja expression invalid operation: Compilation Error: Trying to create view `ga4-meta-crm-integration`.`crm_analytics`.`staging_ga4`, but it currently exists as a table. Either drop `ga4-meta-crm-integration`.`crm_analytics`.`staging_ga4` manually, or run dbt with `--full-refresh` and dbt will drop it for you.
-(in compiled\models\staging\staging_ga4.sql:1:13)
-(in dbt_internal_packages\dbt-bigquery\macros\materializations\view.sql:15:24)
-(in dbt_internal_packages\dbt-bigquery\macros\relations\view\replace.sql:29:5)
-(in dbt_internal_packages\dbt-bigquery\macros\relations\view\replace.sql:48:5)
-(in dbt_internal_packages\dbt-bigquery\macros\materializations\view.sql:6:7)
-  --> compiled\models\staging\staging_ga4.sql:1:13
-   Skipped [-------] model crm_analytics.ga4_transactions (table)
- Succeeded [  5.61s] model crm_analytics.staging_crm_orders (table)
- Succeeded [  5.35s] model crm_analytics.crm_orders_transactions (table)
- Succeeded [  5.24s] model crm_analytics.staging_crm_contacts (table)
- Succeeded [  4.95s] model crm_analytics.crm_contacts_transactions (table)
-  Finished 'build' target 'dev' with 2 errors and 4 warnings in 26s 965ms
+  Finished 'compile' target 'dev' with 2 warnings in 2s 73ms
 New version available 2.0.0-preview.6 (run `dbt system update`)

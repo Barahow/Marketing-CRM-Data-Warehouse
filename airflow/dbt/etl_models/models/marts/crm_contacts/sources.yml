@@ -1,8 +1,8 @@
 version: 2
 
 sources:
-  - name: crm_raw
-    schema: crm_analytics          # BigQuery dataset containing raw staging table
+  - name: crm_raw_contract_marts
+    schema: crm_analytics
     tables:
       - name: staging_crm_contacts
         description: "Cleaned CRM contacts loaded from CSV"

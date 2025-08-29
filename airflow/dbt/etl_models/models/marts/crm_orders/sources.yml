@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: crm_raw
+  - name: crm_raw_order_marts
     schema: crm_analytics          # BigQuery dataset containing staging table
     tables:
       - name: staging_crm_orders    # staging table for CRM orders

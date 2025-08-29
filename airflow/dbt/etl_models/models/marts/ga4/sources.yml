@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: ga4_raw
+  - name: ga4_raw_marts
     schema: raw_ga4
     tables:
       - name: events
