@@ -13,8 +13,8 @@ jobs:
       image: barahow/airflow:latest
       options: --user root
     env:
-      DBT_PROFILES_DIR: ./dbt/etl_models/dbt_env
-      GOOGLE_APPLICATION_CREDENTIALS: ./airflow/secrets/ga4_meta_crm.json
+      DBT_PROFILES_DIR: /usr/local/airflow/dbt/etl_models/dbt_env
+      GOOGLE_APPLICATION_CREDENTIALS: /usr/local/airflow/secrets/ga4_meta_crm.json
 
     steps:
       - name: Checkout repo
@@ -22,15 +22,15 @@ jobs:
 
       - name: Set up service account
         run: |
-          mkdir -p airflow/secrets
-          echo "${{ secrets.GA4_META_CRM_JSON }}" > airflow/secrets/ga4_meta_crm.json
+          mkdir -p /usr/local/airflow/secrets
+          echo "${{ secrets.GA4_META_CRM_JSON }}" > /usr/local/airflow/secrets/ga4_meta_crm.json
         shell: bash
 
       - name: Verify dbt files
         run: |
           echo "Listing files in dbt/etl_models"
-          ls -la dbt/etl_models
-          test -f dbt/etl_models/dbt_project.yml
+          ls -la /usr/local/airflow/dbt/etl_models
+          test -f /usr/local/airflow/dbt/etl_models/dbt_project.yml
 
       - name: Install dbt and SQLFluff
         run: |
@@ -38,16 +38,16 @@ jobs:
           pip install dbt-bigquery sqlfluff sqlfluff-templater-dbt
 
       - name: Install dbt dependencies
-        run: dbt deps --project-dir dbt/etl_models
+        run: dbt deps --project-dir /usr/local/airflow/dbt/etl_models
 
       - name: Lint SQL with SQLFluff
-        run: python -m sqlfluff lint dbt/etl_models/models/ --dialect bigquery
+        run: python -m sqlfluff lint /usr/local/airflow/dbt/etl_models/models/ --dialect bigquery
 
       - name: Compile dbt project
-        run: dbt compile --project-dir dbt/etl_models --profiles-dir ./dbt/etl_models/dbt_env
+        run: dbt compile --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env
 
       - name: Run dbt build
-        run: dbt build --project-dir dbt/etl_models --profiles-dir ./dbt/etl_models/dbt_env --fail-fast --select state:modified+
+        run: dbt build --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env --fail-fast --select state:modified+
 
       - name: Run dbt tests
-        run: dbt test --project-dir dbt/etl_models --profiles-dir ./dbt/etl_models/dbt_env --select tag:critical
+        run: dbt test --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env --select tag:critical
