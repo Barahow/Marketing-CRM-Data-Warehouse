@@ -3,3 +3,4 @@ airflow/dags/exampledag.py
 /scripts/data_collection
 /airflow/secrets
 dbt/etl_models/models/meta/meta_campaigns.sql
+dbt_internal_packages/

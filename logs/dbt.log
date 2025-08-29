@@ -1,0 +1,32 @@
+dbt-fusion 2.0.0-preview.3
+   Loading dbt\etl_models\dbt_env\profiles.yml
+ Debugging profile: dev
+ Debugging dbt version: 2.0.0-preview.3
+ Debugging platform: windows x86_64 (windows)
+ Debugging adapter type: bigquery (remote)
+ Debugging dependencies:
+  git: OK
+ Debugging connection:
+  "schema": "crm_analytics",
+  "token_uri": null,
+  "maximum_bytes_billed": null,
+  "dataproc_cluster_name": null,
+  "timeout_seconds": null,
+  "dataproc_batch": null,
+  "job_retries": 1,
+  "priority": "interactive",
+  "job_creation_timeout_seconds": null,
+  "database": "ga4-meta-crm-integration",
+  "impersonate_service_account": null,
+  "gcs_bucket": null,
+  "execution_project": null,
+  "job_retry_deadline_seconds": null,
+  "compute_region": null,
+  "job_execution_timeout_seconds": 300,
+  "method": "service-account",
+  "client_id": null,
+  "location": "EU"
+ Debugging connection test: OK
+  Debugged All checks passed!
+  Finished 'debug' target 'dev' in 2s 492ms
+New version available 2.0.0-preview.6 (run `dbt system update`)
