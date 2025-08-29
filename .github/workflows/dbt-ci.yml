@@ -47,7 +47,7 @@ jobs:
         run: dbt compile --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env
 
       - name: Run dbt build
-        run: dbt build --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env --fail-fast --select state:modified+
+        run: dbt build --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env --fail-fast
 
       - name: Run dbt tests
         run: dbt test --project-dir /usr/local/airflow/dbt/etl_models --profiles-dir /usr/local/airflow/dbt/etl_models/dbt_env --select tag:critical
